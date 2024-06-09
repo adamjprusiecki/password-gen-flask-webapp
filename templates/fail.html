@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Password</title>
+    <script>
+        function copyPassword() {
+            var password = document.getElementById('passw').innerText;
+            navigator.clipboard.writeText(password).then(function() {
+                alert('Password copied to clipboard');
+            }).catch(function(error) {
+                alert('Failed to copy password: ' + error);
+            });
+        }
+    </script>
+    <style>
+        body {
+            background-color: grey;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto;
+            gap: 10px;
+            padding: 10px;
+        }
+        .grid-item {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid black;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: start;
+        }
+        .grid-item label {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST">
+        <div class="grid-container">
+            <div class="grid-item">
+                <label for="has_lowercase">Include Lowercase Characters</label>
+                <input type="checkbox" id="has_lowercase" name="has_lowercase" value="low" {{ 'checked' if form_data.has_lowercase else '' }}>
+            </div>
+        
+            <div class="grid-item">
+                <label for="has_uppercase">Include Uppercase Characters</label>
+                <input type="checkbox" id="has_uppercase" name="has_uppercase" value="up" {{ 'checked' if form_data.has_uppercase else '' }}>
+            </div>
+        
+            <div class="grid-item">
+                <label for="has_digits">Include Number Characters</label>
+                <input type="checkbox" id="has_digits" name="has_digits" value="num" {{ 'checked' if form_data.has_digits else '' }}>
+            </div>
+        
+            <div class="grid-item">
+                <label for="has_special_characters">Include Special Characters</label>
+                <input type="checkbox" id="has_special_characters" name="has_special_characters" value="spec" {{ 'checked' if form_data.has_special_characters else '' }}>
+            </div>
+
+            <div class="grid-item">
+                <label for="can_repeat_chars">Allow Repeated Characters</label>
+                <input type="checkbox" name="can_repeat_chars" value="low" {{ 'checked' if form_data.can_repeat_chars else '' }}>
+            </div>
+            <div class="grid-item">
+                <label for="password_length">Password Length</label>
+                <input type="number" id="password_length" name="password_length" value="{{ form_data.password_length if form_data.password_length else '' }}" required>
+            </div>
+            <div class="grid-item">
+                <label>Cannot generate password:</label>
+                {% if errormsg %}
+                    <p id="errormsg">{{ errormsg }}</p>
+                {% endif %}
+            </div>
+        </div>
+        <input type="submit" value="Generate Password">
+    </form>
+    <br>
+</body>
+</html>
+
