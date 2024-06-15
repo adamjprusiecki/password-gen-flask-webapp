@@ -12,31 +12,50 @@
             });
         }
     </script>
-    <style>
-        body {
-            background-color: grey;
+    <script>
+        function copyPassword() {
+            var password = document.getElementById('passw').innerText;
+            navigator.clipboard.writeText(password).then(function() {
+                alert('Password copied to clipboard');
+            }).catch(function(error) {
+                alert('Failed to copy password: ' + error);
+            });
         }
-        .grid-container {
-            display: grid;
-            grid-template-columns: auto;
-            gap: 10px;
-            padding: 10px;
-        }
-        .grid-item {
-            padding: 10px;
-            text-align: left;
-            border: 1px solid black;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: start;
-        }
-        .grid-item label {
-            margin-bottom: 10px;
-        }
-    </style>
+    </script>
+        <style>
+            body {
+                background-color: grey;
+                padding-top: 50px; /* Add space at the top of the body for the fixed header */
+            }
+            .fixed-header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                background-color: #06294b;
+                padding: 10px;
+                text-align: center;
+                z-index: 1000; /* Ensure the header is above all other elements */
+            }
+            .grid-container {
+                display: grid;
+                grid-template-columns: auto;
+                gap: 10px;
+                padding: 10px;
+            }
+            .grid-item {
+                padding: 10px;
+                text-align: left;
+                border: 1px solid black;
+            }
+        </style>
 </head>
 <body>
+    <div class="fixed-header">
+        <a href="http://adamjprusiecki.com">
+            <button style="color: white; background-color: #06294b; border: none;">Home</button>
+        </a>
+    </div>
     <form method="POST">
         <div class="grid-container">
             <div class="grid-item">
